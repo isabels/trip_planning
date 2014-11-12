@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bucket List</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<h1>Users</h1>
+		<ul>
+			<% @users.each do |user| %>
+				<li>
+					<form action="/delete_user/<%=user.id %>" method="POST"> 
+  						<input type="submit" value="x"/>
+  						<a href="/users/<%= user.id %>"><%= user.name %></a>
+					</form>
+
+				</li>
+			<% end %>	
+		</ul>
+		<h2> Add another user</h2>
+		<div class="addNew">
+
+		<form action='/create_user' method='POST'>
+	  			<input type='text' name='name' placeholder='name' />
+	  			<input type='submit' value='Save'>
+		</form>
+		</div>
+
+	</div>
+</body>
+</html>
+

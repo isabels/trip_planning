@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bucket List</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<h1><%=@user.name%>'s to do list</h1>
+		<h3> <a href="/"> [back] </a></h3>
+		<ul>
+			<% @tasks.each do |task| %>
+				<li>
+					<form action="/delete/<%=@user.id%>/<%=task.id %>" method="POST">
+  						<input type="submit" value="✓"/>
+  						<%="#{task.description} "%> 
+						<span class="date"><%="#{task.due_date}\t\t"%></span>
+					</form>
+				</li>
+			<% end %>	
+		</ul>
+		<h2> Add another climb!</h2>
+					<div class="addNew">
+
+		<form action='/<%=@user.id%>/create_item' method='POST'>
+	  			<input type='text' name='description' placeholder='peak' />
+	  			<input type='text' name='due_date' placeholder='date' />
+	  			<input type='submit' value='Save'>
+		</form>
+			  		</div>
+
+	</div>
+</body>
+</html>
+
+
