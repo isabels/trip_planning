@@ -17,20 +17,58 @@ else
 	)
 end
 
+get '/' do
+	@users = User.all.order(:name)
+	@trips = Trip.all.order(:date)
+	erb :home
+end
+
 # get '/' do
 # 	@users = User.all.order(:name)
 # 	erb :user_list
 # end
+
+post '/create_user' do
+	User.create(params)
+	redirect '/'
+end
+
+post '/create_trip' do
+	Trip.create(params)
+	redirect'/'
+end
 
 # post '/create_user' do
 # 	User.create(params)
 # 	redirect '/'
 # end
 
+post '/delete_user/:id' do
+	User.find_by(id: params[:id]).destroy
+	redirect '/'
+end
+
+post '/delete_trip/:id' do
+	Trip.find_by(id: params[:id]).destroy
+	redirect '/'
+end
+
 # post '/delete_user/:id' do
 # 	User.find_by(id: params[:id]).destroy
 # 	redirect '/'
 # end
+
+get '/users/:id' do
+	@user = User.find_by(id: params[:id])
+	@trips = Trip.where(user_id: @user.id)
+	erb user
+end
+
+get '/trips/:id' do
+	@users = User.where(trip_id: params[:id])
+	@items = Item.where(trip_id: params[:id])
+	erb trip
+end
 
 # get '/users/:id' do
 # 	@user = User.find_by(id: params[:id])
@@ -39,11 +77,23 @@ end
 # 	erb :item_list
 # end
 
+post '/trips/:id/create_item' do
+	@trip = Trip.find(params[:id])
+	#figure out how to get which parameters into the right things!
+	redirect "/trips/#{@trip.id.to_s}"
+end
+
 # post '/:user/create_item' do
 # 	@user = User.find(params[:user])
 # 	TodoItem.create(user: @user, description: params[:description], due_date: params[:due_date])
 # 	redirect "/users/#{@user.id.to_s}"
 # end
+
+post '/delete_item/:trip/:item' do
+	@trip = Trip.find(params[:trip])
+	Item.find_by(id: params[:item]).destroy
+	redirect "/trips/#{@trip.id.to_s}"
+end
 
 # post '/delete/:user/:item' do
 # 	@user = User.find(params[:user])
