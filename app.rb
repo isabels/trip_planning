@@ -3,8 +3,9 @@ require 'rubygems'
 require 'bundler/setup'
 # load all of the gems in the gemfile
 Bundler.require
-# require './models/TodoItem'
-# require './models/User'
+require './models/Item'
+require './models/User'
+require './models/Trip'
 
 if ENV['DATABASE_URL']
 	ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
