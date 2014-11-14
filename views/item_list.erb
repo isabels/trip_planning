@@ -20,14 +20,13 @@
 			<% end %>	
 		</ul>
 		<h2> Add another climb!</h2>
-					<div class="addNew">
-
-		<form action='/<%=@user.id%>/create_item' method='POST'>
-	  			<input type='text' name='description' placeholder='peak' />
-	  			<input type='text' name='due_date' placeholder='date' />
-	  			<input type='submit' value='Save'>
-		</form>
-			  		</div>
+		<div class="addNew">
+			<form action='/<%=@user.id%>/create_item' method='POST'>
+		  			<input type='text' name='description' placeholder='peak' />
+		  			<input type='text' name='due_date' placeholder='date' />
+		  			<input type='submit' value='Save'>
+			</form>
+		</div>
 
 	</div>
 </body>

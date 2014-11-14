@@ -7,6 +7,8 @@ require './models/Item'
 require './models/User'
 require './models/Trip'
 
+# enable :sessions #lets you use sessions hash, will send back set-cookie header
+
 if ENV['DATABASE_URL']
 	ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
 else
@@ -16,6 +18,14 @@ else
 		:encoding => 'utf8'
 	)
 end
+#authentication bullshit
+# get '/login' do #for submitting anuthentication
+# 	erb :login
+# end
+
+# post '/login' do
+# 	require "json"
+# end
 
 get '/' do
 	@users = User.all.order(:name)
@@ -45,11 +55,13 @@ end
 
 post '/delete_user/:id' do
 	User.find_by(id: params[:id]).destroy
+	#have to do something about deleting user's items
 	redirect '/'
 end
 
 post '/delete_trip/:id' do
 	Trip.find_by(id: params[:id]).destroy
+	#have to do something about deleting trip's items
 	redirect '/'
 end
 

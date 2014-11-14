@@ -11,6 +11,6 @@ group :development do
 	gem 'shotgun', '>=0.9'
 end
 
-# group :production do
-# 	gem 'pg'
-# end
+group :production do
+	gem 'pg'
+end
