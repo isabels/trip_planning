@@ -11,11 +11,11 @@
 		<div class="users">
 			<h2> Users </h2>
 			<ul>
-				<% @users.each do |task| %>
+				<% @users.each do |user| %>
 				<li>
-					<form action="/delete_user/<%=@user.id%>" method="POST">
+					<form action="/delete_user/<%=user.id%>" method="POST">
   						<input type="submit" value="X"/>
-  						<%="#{user.name} "%> 
+  						<a href="/users/<%= user.id %>"><%= user.name %></a>
 					</form>
 				</li>
 				<% end %>	
@@ -31,11 +31,11 @@
 		<div class="trips">
 			<h2> Trips </h2>
 			<ul>
-				<% @trips.each do |task| %>
+				<% @trips.each do |trip| %>
 				<li>
-					<form action="/delete_trip/<%=@trip.id%>" method="POST">
+					<form action="/delete_trip/<%=trip.id%>" method="POST">
   						<input type="submit" value="X"/>
-  						<%="#{trip.name} "%> 
+  						<a href="/trips/<%= trip.id %>"><%= trip.name %></a>
   						<span class="date"><%="#{trip.date.to_s}"%></span>
 					</form>
 				</li>

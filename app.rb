@@ -30,8 +30,10 @@ end
 get '/' do
 	@users = User.all.order(:name)
 	@trips = Trip.all.order(:date)
-	erb :home
+	erb :main
 end
+
+#the problem is somewhere in trips-users? like we never created anything for it? ????
 
 # get '/' do
 # 	@users = User.all.order(:name)
@@ -39,7 +41,7 @@ end
 # end
 
 post '/create_user' do
-	User.create(params)
+	User.create(name: params[:name])
 	redirect '/'
 end
 
@@ -73,18 +75,18 @@ end
 get '/users/:id' do
 	@user = User.find_by(id: params[:id])
 	@trips = Trip.where(user_id: @user.id)
-	erb user
+	erb :user
 end
 
 get '/trips/:id' do
+	@trip = Trip.find(params[:id])
 	@users = User.where(trip_id: params[:id])
 	@items = Item.where(trip_id: params[:id])
-	erb trip
+	erb :trip
 end
 
 # get '/users/:id' do
 # 	@user = User.find_by(id: params[:id])
-# 	# find(:first, :conditions => "user_name = '#{user_name}' AND password = '#{password}'")
 # 	@tasks = TodoItem.where(user_id: @user.id) 
 # 	erb :item_list
 # end
