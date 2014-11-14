@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bucket List</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<h1> <%=@user.name%>'s Trips </h1>
+			<ul>
+				<% @trips.each do |trip| %>
+				<li>
+					<form action="/delete_trip/<%=trip.id%>" method="POST">
+  						<input type="submit" value="X"/>
+  						<%="#{trip.name} "%> 
+  						<span class="date"><%="#{trip.date.to_s}"%></span>
+					</form>
+				</li>
+				<% end %>	
+			</ul>
+			<h3> Add a new trip </h3>
+			<div class="addNew">
+			<form action='/create_trip' method='POST'>
+		  			<input type='text' name='name' placeholder='name' />
+		  			<input type='text' name='date' placeholder='date' />
+		  			<input type='submit' value='Save'>
+			</form>
+	</div>
+</body>
+</html>

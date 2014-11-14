@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bucket List</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<h1> <%=@trip.name %> </h1>
+
+		<div class="users">
+			<h2> Users </h2>
+			<ul>
+				<% @users.each do |user| %>
+				<li>
+					<form action="/delete_user/<%=user.id%>" method="POST">
+  						<input type="submit" value="X"/>
+  						<%="#{user.name} "%> 
+					</form>
+				</li>
+				<% end %>	
+			</ul>
+			<h3> Add a new user </h3>
+			<div class="addNew">
+			<form action='/create_user' method='POST'>
+		  			<input type='text' name='name' placeholder='name' />
+		  			<input type='submit' value='Save'>
+			</form>
+		</div>
+
+		<div class="items">
+			<h2> Gear </h2>
+			<ul>
+				<% @items.each do |task| %>
+				<li>
+					<form action="/delete_item/<%=@trip.id%>/<%=@item.id%>" method="POST">
+  						<input type="submit" value="X"/>
+  						<%="#{item.name} "%> 
+					</form>
+				</li>
+				<% end %>	
+			</ul>
+			<h3> Add a new item </h3>
+			<div class="addNew">
+			<form action='/trips/<%=@trip.id%>/create_item' method='POST'>
+		  			<input type='text' name='name' placeholder='name' />
+		  			<input type='submit' value='Save'>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
