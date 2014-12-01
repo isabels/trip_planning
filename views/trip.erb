@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bucket List</title>
+  <title>Gear Planning</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 	<div class="wrapper">
 		<h1> <%=@trip.name %> </h1>
+		<h3> <a href="/"> [home] </a></h3>
 
 		<div class="users">
 			<h2> Users </h2>
 			<ul>
 				<% @users.each do |user| %>
 				<li>
-					<form action="/delete_user/<%=user.id%>" method="POST">
+					<form action="/delete_user_from_trip/<%=@trip.id%>/<%=user.id%>" method="POST">
   						<input type="submit" value="X"/>
   						<%="#{user.name} "%> 
 					</form>
 				</li>
 				<% end %>	
 			</ul>
-			<h3> Add a new user </h3>
+			<h3> <a href="/trips/<%=@trip.id%>/add_user" > Add a new user to this trip </a></h3>
+
+			<!-- <h3> Add a new user </h3>
 			<div class="addNew">
 			<form action='/create_user' method='POST'>
 		  			<input type='text' name='name' placeholder='name' />
 		  			<input type='submit' value='Save'>
-			</form>
+			</form> -->
 		</div>
 
 		<div class="items">

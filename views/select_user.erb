@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Gear Planning</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<h1> Gear Planning </h1>
+		<h3> <a href="/trips/<%=@trip.id%>"> [back to trip] </a></h3>
+
+
+		<div class="users">
+			<h2> Select a user </h2>
+			<ul>
+				<% @users.each do |user| %>
+				<li>
+					<a href="/add_user_to_trip/<%=@trip.id%>/<%=user.id%>"><%= user.name %></a>
+				</li>
+				<% end %>	
+			</ul>
+			<h3> Or add a new user </h3>
+			<div class="addNew">
+			<form action='/create_user_with_trip/<%=@trip.id%>' method='POST'>
+		  			<input type='text' name='name' placeholder='name' />
+		  			<input type='submit' value='Save'>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

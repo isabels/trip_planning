@@ -6,6 +6,7 @@ Bundler.require
 require './models/Item'
 require './models/User'
 require './models/Trip'
+require './models/TripUser'
 
 # enable :sessions #lets you use sessions hash, will send back set-cookie header
 
@@ -18,6 +19,7 @@ else
 		:encoding => 'utf8'
 	)
 end
+
 #authentication bullshit
 # get '/login' do #for submitting anuthentication
 # 	erb :login
@@ -33,13 +35,6 @@ get '/' do
 	erb :main
 end
 
-#the problem is somewhere in trips-users? like we never created anything for it? ????
-
-# get '/' do
-# 	@users = User.all.order(:name)
-# 	erb :user_list
-# end
-
 post '/create_user' do
 	User.create(name: params[:name])
 	redirect '/'
@@ -49,11 +44,6 @@ post '/create_trip' do
 	Trip.create(params)
 	redirect'/'
 end
-
-# post '/create_user' do
-# 	User.create(params)
-# 	redirect '/'
-# end
 
 post '/delete_user/:id' do
 	User.find_by(id: params[:id]).destroy
@@ -67,22 +57,29 @@ post '/delete_trip/:id' do
 	redirect '/'
 end
 
-# post '/delete_user/:id' do
-# 	User.find_by(id: params[:id]).destroy
-# 	redirect '/'
-# end
-
 get '/users/:id' do
 	@user = User.find_by(id: params[:id])
-	@trips = Trip.where(user_id: @user.id)
+	@trips = Trip.where(id: TripUser.where(user_id: params[:id]))
 	erb :user
 end
 
 get '/trips/:id' do
 	@trip = Trip.find(params[:id])
-	@users = User.where(trip_id: params[:id])
+	@users = User.where(id: TripUser.where(trip_id: params[:id]))
 	@items = Item.where(trip_id: params[:id])
 	erb :trip
+end
+
+get '/trips/:id/add_user' do
+	@trip = Trip.find(params[:id])
+	@users = User.where.not(id: TripUser.where(trip_id: params[:id]))
+	erb :select_user
+end
+
+#this is the add existing user to a trip from the add users to trip page
+get '/add_user_to_trip/:trip_id/:user_id' do
+	TripUser.create(trip_id: params[:trip_id], user_id: params[:user_id])
+	redirect "/trips/#{params[:trip_id]}"
 end
 
 # get '/users/:id' do
@@ -95,6 +92,20 @@ post '/trips/:id/create_item' do
 	@trip = Trip.find(params[:id])
 	#figure out how to get which parameters into the right things!
 	redirect "/trips/#{@trip.id.to_s}"
+end
+
+#this is the create user option from the add users to trip page
+post '/create_user_with_trip/:trip_id' do
+	@user = User.create(name: params[:name])
+	@user
+	TripUser.create(trip_id: params[:trip_id], user_id: @user.id) #this doesn't work????
+	# redirect "/trips/#{params[:trip_id]}"
+end
+
+#this is the delete user button from the users list on the trip page
+post '/delete_user_from_trip/:trip_id/:user_id' do
+	TripUser.find_by(user_id: params[:user_id], trip_id: params[:trip_id]).destroy # AND in activerecord
+	redirect "/trips/#{params[:trip_id]}"
 end
 
 # post '/:user/create_item' do
