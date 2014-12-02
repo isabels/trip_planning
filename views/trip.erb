@@ -14,6 +14,7 @@
 
 		<div class="users">
 			<h2> Users </h2>
+			<div class="simpleList">
 			<ul>
 				<% @users.each do |user| %>
 				<li>
@@ -24,6 +25,7 @@
 				</li>
 				<% end %>	
 			</ul>
+			</div>
 			<h3> <a href="/trips/<%=@trip.id%>/add_user" > Add a new user to this trip </a></h3>
 		</div>
 
@@ -62,7 +64,8 @@
 				</ul>
 				</div>
 			</div>
-			Assign gear to:
+			<div class="addNew">
+			<span class="date">Assign gear to:</span>
 			<select name="users">
 				<% @users.each do |user| %>
 					<option value="<%=user.id%>"><%=user.name%></option>
@@ -70,6 +73,7 @@
 				<option value="0">unclaimed</option>
 			</select>
 			<input type="submit" value="Assign gear">
+			</div>
 			</form>
 
 			<h3> <a href="/trips/<%=@trip.id%>/edit_items"> Edit gear list</a></h3>

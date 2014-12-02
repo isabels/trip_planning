@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Gear Planning</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div class="wrapper">
+			<div class="header">
+			<h1> <%=@trip.name %> </h1>
+			<h3> <a href="/trips/<%=@trip.id%>"> [back to trip] </a></h3>
+			<h2> Edit gear list </h2>
+		</div>
+		<div class="simpleList">
+		<ul>
+			<% @items.each do |item| %>
+			<li>
+				<form action='/delete_item/<%=@trip.id%>/<%=item.id%>' method='POST'>
+					<input type="submit" value="X"/>
+  						<%="#{item.name} "%> 
+				</form>
+			</li>
+			<% end %>
+		</ul>
+		</div>
+
+
+		<h3> Add a new item </h3>
+		<div class="addNew">
+			<form action='/trips/<%=@trip.id%>/create_item' method='POST'>
+		  			<input type='text' name='name' placeholder='name' />
+		  			<input type='submit' value='Save'>
+			</form>
+		</div>
+</body>
+</html>

@@ -11,7 +11,7 @@
 			<h3> <a href="/trips/<%=@trip.id%>"> [back to trip] </a></h3>
 			<h2> Select a user </h2>
 		</div>
-
+		<div class="simpleList">
 		<ul>
 			<% @users.each do |user| %>
 			<li>
@@ -19,6 +19,7 @@
 			</li>
 			<% end %>	
 		</ul>
+		</div>
 		<h3> Or add a new user </h3>
 		<div class="addNew">
 		<form action='/create_user_with_trip/<%=@trip.id%>' method='POST'>
