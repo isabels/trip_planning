@@ -119,9 +119,12 @@ post '/delete_item/:trip/:item' do
 	redirect "/trips/#{@trip.id.to_s}"
 end
 
-# post '/delete/:user/:item' do
-# 	@user = User.find(params[:user])
-# 	TodoItem.find_by(id: params[:item]).destroy
-# 	redirect "/users/#{@user.id.to_s}"
-# end
+post '/assign_items/:trip_id' do
+	items = params[:items]
+	items.each do |item|
+		Item.find_by(id: item[1]).update(user_id: params[:users])
+	end
+	redirect "/trips/#{params[:trip_id]}/"
+end
+
 

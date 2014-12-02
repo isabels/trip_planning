@@ -22,34 +22,55 @@
 				<% end %>	
 			</ul>
 			<h3> <a href="/trips/<%=@trip.id%>/add_user" > Add a new user to this trip </a></h3>
-
-			<!-- <h3> Add a new user </h3>
-			<div class="addNew">
-			<form action='/create_user' method='POST'>
-		  			<input type='text' name='name' placeholder='name' />
-		  			<input type='submit' value='Save'>
-			</form> -->
 		</div>
 
-		<div class="items">
-			<h2> Gear </h2>
+		<h2> Gear </h2>
+		<form action="/assign_items/<%=@trip.id%>" method="POST">
+		<% @users.each do |user| %>
+			<h3> <%=user.name%> </h3>
+			<div id="<%=user.name%>" class="userLists">
+				<ul>
+				<% @user_items = @items.where(user_id: user.id) %>
+				<% @user_items.each do |item| %>
+					<li>
+  						<input type="checkbox" name='items[<%=item.name%>]' value="<%=item.id%>"> <%=item.name%>
+					</li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<h3> unclaimed </h3>
+		<div id="unclaimed" class="userLists">		
 			<ul>
-				<% @items.each do |item| %>
+				<% @unclaimed_items = @items.where(user_id: nil) %>
+				<% @unclaimed_items.each do |item| %>
+				<div id="<%=item.id%>" class="item">
 				<li>
-					<form action="/delete_item/<%=@trip.id%>/<%=item.id%>" method="POST">
-  						<input type="submit" value="X"/>
-  						<%="#{item.name} "%> 
-					</form>
+  					<input type="checkbox" name='items[<%=item.name%>]' value="<%=item.id%>"> <%=item.name%>
 				</li>
+				</div>
 				<% end %>	
 			</ul>
-			<h3> Add a new item </h3>
-			<div class="addNew">
+		</div>
+
+		<select name="users">
+			<% @users.each do |user| %>
+				<option value="<%=user.id%>"><%=user.name%></option>
+			<% end %>
+			<option value="nil">unclaimed</option>
+		</select>
+		<input type="submit" value="Select">
+		</form>
+
+
+		<!-- rEMOVE THIS SHIT??? MOVE IT??? -->
+		<!-- <h3> Add a new item </h3>
+		<div class="addNew">
 			<form action='/trips/<%=@trip.id%>/create_item' method='POST'>
 		  			<input type='text' name='name' placeholder='name' />
 		  			<input type='submit' value='Save'>
 			</form>
-		</div>
-	</div>
+		</div> -->
 </body>
 </html>

@@ -50,7 +50,23 @@ a:hover {
 	text-align: center;
 }
 
-ul
-{
+ul {
     list-style-type: none;
+}
+
+#user1 {
+	width:350px;
+	height:70px;
+	padding:10px;
+	border:1px solid #aaaaaa;
+}
+
+.item {
+	text-align: left;
+	font-size: 100%;
+}
+
+.userLists {
+	border:1px solid #aaaaaa;
+	list-style-type: none;
 }
