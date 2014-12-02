@@ -53,7 +53,6 @@ end
 
 post '/delete_trip/:id' do
 	Trip.find_by(id: params[:id]).destroy
-	#have to do something about deleting trip's items
 	redirect '/'
 end
 
@@ -63,6 +62,7 @@ get '/users/:id' do
 	erb :user
 end
 
+#this is the page with all of the trip's info
 get '/trips/:id' do
 	@trip = Trip.find(params[:id])
 	@users = User.where(id: TripUser.where(trip_id: params[:id]))
@@ -70,6 +70,7 @@ get '/trips/:id' do
 	erb :trip
 end
 
+#this is the select users to add to trip page
 get '/trips/:id/add_user' do
 	@trip = Trip.find(params[:id])
 	@users = User.where.not(id: TripUser.where(trip_id: params[:id]))
@@ -82,16 +83,11 @@ get '/add_user_to_trip/:trip_id/:user_id' do
 	redirect "/trips/#{params[:trip_id]}"
 end
 
-# get '/users/:id' do
-# 	@user = User.find_by(id: params[:id])
-# 	@tasks = TodoItem.where(user_id: @user.id) 
-# 	erb :item_list
-# end
-
+#this is creating an item
 post '/trips/:id/create_item' do
-	@trip = Trip.find(params[:id])
+	Item.create(name: params[:name], trip_id: params[:id])
 	#figure out how to get which parameters into the right things!
-	redirect "/trips/#{@trip.id.to_s}"
+	redirect "/trips/#{@params[:id]}"
 end
 
 #this is the create user option from the add users to trip page
