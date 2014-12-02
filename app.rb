@@ -88,7 +88,7 @@ end
 
 #this is creating an item
 post '/trips/:id/create_item' do
-	Item.create(name: params[:name], trip_id: params[:id])
+	Item.create(name: params[:name], trip_id: params[:id], user_id: 0)
 	#figure out how to get which parameters into the right things!
 	redirect "/trips/#{@params[:id]}"
 end
@@ -124,7 +124,7 @@ post '/assign_items/:trip_id' do
 	items.each do |item|
 		Item.find_by(id: item[1]).update(user_id: params[:users])
 	end
-	redirect "/trips/#{params[:trip_id]}/"
+	redirect "/trips/#{params[:trip_id]}"
 end
 
 

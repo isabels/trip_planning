@@ -43,7 +43,7 @@
 		<h3> unclaimed </h3>
 		<div id="unclaimed" class="userLists">		
 			<ul>
-				<% @unclaimed_items = @items.where(user_id: nil) %>
+				<% @unclaimed_items = @items.where(user_id: 0) %>
 				<% @unclaimed_items.each do |item| %>
 				<div id="<%=item.id%>" class="item">
 				<li>
@@ -58,9 +58,9 @@
 			<% @users.each do |user| %>
 				<option value="<%=user.id%>"><%=user.name%></option>
 			<% end %>
-			<option value="nil">unclaimed</option>
+			<option value="0">unclaimed</option>
 		</select>
-		<input type="submit" value="Select">
+		<input type="submit" value="Assign gear">
 		</form>
 
 
