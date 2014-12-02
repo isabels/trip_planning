@@ -34,9 +34,9 @@
 		<div class="items">
 			<h2> Gear </h2>
 			<ul>
-				<% @items.each do |task| %>
+				<% @items.each do |item| %>
 				<li>
-					<form action="/delete_item/<%=@trip.id%>/<%=@item.id%>" method="POST">
+					<form action="/delete_item/<%=@trip.id%>/<%=item.id%>" method="POST">
   						<input type="submit" value="X"/>
   						<%="#{item.name} "%> 
 					</form>

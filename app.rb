@@ -46,26 +46,29 @@ post '/create_trip' do
 end
 
 post '/delete_user/:id' do
+	TripUser.where(user_id: params[:id]).destroy_all
 	User.find_by(id: params[:id]).destroy
 	#have to do something about deleting user's items
 	redirect '/'
 end
 
 post '/delete_trip/:id' do
+	TripUser.where(trip_id: params[:id]).destroy_all
+	Item.where(trip_id: params[:id]).destroy_all #???
 	Trip.find_by(id: params[:id]).destroy
 	redirect '/'
 end
 
 get '/users/:id' do
 	@user = User.find_by(id: params[:id])
-	@trips = Trip.where(id: TripUser.where(user_id: params[:id]))
+	@trips = Trip.where(id: TripUser.select(:trip_id).where(user_id: params[:id]))
 	erb :user
 end
 
 #this is the page with all of the trip's info
 get '/trips/:id' do
 	@trip = Trip.find(params[:id])
-	@users = User.where(id: TripUser.where(trip_id: params[:id]))
+	@users = User.where(id: TripUser.select(:user_id).where(trip_id: params[:id]))
 	@items = Item.where(trip_id: params[:id])
 	erb :trip
 end
@@ -73,7 +76,7 @@ end
 #this is the select users to add to trip page
 get '/trips/:id/add_user' do
 	@trip = Trip.find(params[:id])
-	@users = User.where.not(id: TripUser.where(trip_id: params[:id]))
+	@users = User.where.not(id: TripUser.select(:user_id).where(trip_id: params[:id]))
 	erb :select_user
 end
 
@@ -92,10 +95,10 @@ end
 
 #this is the create user option from the add users to trip page
 post '/create_user_with_trip/:trip_id' do
-	@user = User.create(name: params[:name])
-	@user
-	TripUser.create(trip_id: params[:trip_id], user_id: @user.id) #this doesn't work????
-	# redirect "/trips/#{params[:trip_id]}"
+	user = User.create(name: params[:name])
+	user
+	TripUser.create(trip_id: params[:trip_id], user_id: user.id) #this doesn't work????
+	redirect "/trips/#{params[:trip_id]}"
 end
 
 #this is the delete user button from the users list on the trip page
