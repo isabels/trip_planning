@@ -11,22 +11,20 @@
 			<h3> <a href="/trips/<%=@trip.id%>"> [back to trip] </a></h3>
 			<h2> Select a user </h2>
 		</div>
-		
-		<div class="users">
-			<ul>
-				<% @users.each do |user| %>
-				<li>
-					<a href="/add_user_to_trip/<%=@trip.id%>/<%=user.id%>"><%= user.name %></a>
-				</li>
-				<% end %>	
-			</ul>
-			<h3> Or add a new user </h3>
-			<div class="addNew">
-			<form action='/create_user_with_trip/<%=@trip.id%>' method='POST'>
-		  			<input type='text' name='name' placeholder='name' />
-		  			<input type='submit' value='Save'>
-			</form>
-		</div>
+
+		<ul>
+			<% @users.each do |user| %>
+			<li>
+				<a href="/add_user_to_trip/<%=@trip.id%>/<%=user.id%>"><%= user.name %></a>
+			</li>
+			<% end %>	
+		</ul>
+		<h3> Or add a new user </h3>
+		<div class="addNew">
+		<form action='/create_user_with_trip/<%=@trip.id%>' method='POST'>
+	  			<input type='text' name='name' placeholder='name' />
+	  			<input type='submit' value='Save'>
+		</form>
 	</div>
 </body>
 </html>

@@ -9,7 +9,6 @@
 
 		<div class="header">
 		<h1> <%=@trip.name %> </h1>
-		<h2> <%=@trip.date %> </h2>
 		<h3> <a href="/"> [home] </a></h3>
 		</div>
 
@@ -30,11 +29,12 @@
 
 		<div class="items">
 			<h2> Gear </h2>
-			
+
 			<form action="/assign_items/<%=@trip.id%>" method="POST">
 			<% @users.each do |user| %>
 				<h3> <%=user.name%> </h3>
 				<div id="<%=user.name%>" class="userLists">
+					<div class="multipleColumns">
 					<ul>
 					<% @user_items = @items.where(user_id: user.id) %>
 					<% @user_items.each do |item| %>
@@ -43,11 +43,13 @@
 						</li>
 					<% end %>
 					</ul>
+					</div>
 				</div>
 			<% end %>
 
 			<h3> unclaimed </h3>
-			<div id="unclaimed" class="userLists">		
+			<div id="unclaimed" class="userLists">	
+				<div class="multipleColumns">	
 				<ul>
 					<% @unclaimed_items = @items.where(user_id: 0) %>
 					<% @unclaimed_items.each do |item| %>
@@ -58,6 +60,7 @@
 					</div>
 					<% end %>	
 				</ul>
+				</div>
 			</div>
 			Assign gear to:
 			<select name="users">
