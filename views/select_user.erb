@@ -6,12 +6,13 @@
 </head>
 <body>
 	<div class="wrapper">
-		<h1> Gear Planning </h1>
-		<h3> <a href="/trips/<%=@trip.id%>"> [back to trip] </a></h3>
-
-
-		<div class="users">
+		<div class="header">
+			<h1> Gear Planning </h1>
+			<h3> <a href="/trips/<%=@trip.id%>"> [back to trip] </a></h3>
 			<h2> Select a user </h2>
+		</div>
+		
+		<div class="users">
 			<ul>
 				<% @users.each do |user| %>
 				<li>

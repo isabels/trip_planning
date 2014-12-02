@@ -6,8 +6,11 @@
 </head>
 <body>
 	<div class="wrapper">
-		<h1> <%=@user.name%>'s Trips </h1>
-		<h3> <a href="/"> [home] </a></h3>
+		<div class="header">
+			<h1> <%=@user.name%>'s Trips </h1>
+			<h3> <a href="/"> [home] </a></h3>
+		</div>
+
 			<ul>
 				<% @trips.each do |trip| %>
 				<li>

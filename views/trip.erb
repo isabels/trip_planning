@@ -6,8 +6,12 @@
 </head>
 <body>
 	<div class="wrapper">
+
+		<div class="header">
 		<h1> <%=@trip.name %> </h1>
+		<h2> <%=@trip.date %> </h2>
 		<h3> <a href="/"> [home] </a></h3>
+		</div>
 
 		<div class="users">
 			<h2> Users </h2>
@@ -24,53 +28,48 @@
 			<h3> <a href="/trips/<%=@trip.id%>/add_user" > Add a new user to this trip </a></h3>
 		</div>
 
-		<h2> Gear </h2>
-		<form action="/assign_items/<%=@trip.id%>" method="POST">
-		<% @users.each do |user| %>
-			<h3> <%=user.name%> </h3>
-			<div id="<%=user.name%>" class="userLists">
+		<div class="items">
+			<h2> Gear </h2>
+			
+			<form action="/assign_items/<%=@trip.id%>" method="POST">
+			<% @users.each do |user| %>
+				<h3> <%=user.name%> </h3>
+				<div id="<%=user.name%>" class="userLists">
+					<ul>
+					<% @user_items = @items.where(user_id: user.id) %>
+					<% @user_items.each do |item| %>
+						<li>
+	  						<input type="checkbox" name='items[<%=item.name%>]' value="<%=item.id%>"> <%=item.name%>
+						</li>
+					<% end %>
+					</ul>
+				</div>
+			<% end %>
+
+			<h3> unclaimed </h3>
+			<div id="unclaimed" class="userLists">		
 				<ul>
-				<% @user_items = @items.where(user_id: user.id) %>
-				<% @user_items.each do |item| %>
+					<% @unclaimed_items = @items.where(user_id: 0) %>
+					<% @unclaimed_items.each do |item| %>
+					<div id="<%=item.id%>" class="item">
 					<li>
-  						<input type="checkbox" name='items[<%=item.name%>]' value="<%=item.id%>"> <%=item.name%>
+	  					<input type="checkbox" name='items[<%=item.name%>]' value="<%=item.id%>"> <%=item.name%>
 					</li>
-				<% end %>
+					</div>
+					<% end %>	
 				</ul>
 			</div>
-		<% end %>
-
-		<h3> unclaimed </h3>
-		<div id="unclaimed" class="userLists">		
-			<ul>
-				<% @unclaimed_items = @items.where(user_id: 0) %>
-				<% @unclaimed_items.each do |item| %>
-				<div id="<%=item.id%>" class="item">
-				<li>
-  					<input type="checkbox" name='items[<%=item.name%>]' value="<%=item.id%>"> <%=item.name%>
-				</li>
-				</div>
-				<% end %>	
-			</ul>
-		</div>
-
-		<select name="users">
-			<% @users.each do |user| %>
-				<option value="<%=user.id%>"><%=user.name%></option>
-			<% end %>
-			<option value="0">unclaimed</option>
-		</select>
-		<input type="submit" value="Assign gear">
-		</form>
-
-
-		<!-- rEMOVE THIS SHIT??? MOVE IT??? -->
-		<!-- <h3> Add a new item </h3>
-		<div class="addNew">
-			<form action='/trips/<%=@trip.id%>/create_item' method='POST'>
-		  			<input type='text' name='name' placeholder='name' />
-		  			<input type='submit' value='Save'>
+			Assign gear to:
+			<select name="users">
+				<% @users.each do |user| %>
+					<option value="<%=user.id%>"><%=user.name%></option>
+				<% end %>
+				<option value="0">unclaimed</option>
+			</select>
+			<input type="submit" value="Assign gear">
 			</form>
-		</div> -->
+
+			<h3> <a href="/trips/<%=@trip.id%>/edit_items"> Edit gear list</a></h3>
+		</div>
 </body>
 </html>
